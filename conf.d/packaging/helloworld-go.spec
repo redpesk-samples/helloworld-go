@@ -1,4 +1,7 @@
+# disable debuginfo package generation
 %global debug_package %{nil}
+
+# set Go cross-compilation environment variable
 %ifarch aarch64
     %define go_arch arm64
 %elifarch x86_64
@@ -18,7 +21,7 @@ BuildRequires:  go-rpm-macros
 BuildRequires:  go >= 1.21
 
 %description
-The simple helloworld program written in go !
+The simple helloworld program written in Go!
 
 ### redtest package definition
 %package redtest
@@ -26,7 +29,7 @@ Summary:        Redtest subpackage of helloworld-go package
 Requires:       %{name} = %{version}
 
 %description redtest
-The tests for the most simple hello program of the world !
+The tests for the simplest hello program of the world!
 
 ### Prepare build environment stage
 %prep
