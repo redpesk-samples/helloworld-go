@@ -1,0 +1,48 @@
+#!/bin/bash
+
+set -e
+
+# Path where the script is installed
+FULL_TEST_PATH=$(dirname $0)
+# Path where the logs need to be stored
+FULL_LOGS_PATH="/var/log/redtest/helloworld-go"
+
+# Run the test command and capture its output
+output=$($FULL_TEST_PATH/helloworld-go.test -test.v)
+
+# Initialize variables
+test_count=0
+passed_count=0
+TAP_FILE="${FULL_LOGS_PATH}/helloworld-go.tap"
+
+# Start TAP output
+mkdir -p $FULL_LOGS_PATH
+echo "TAP version 13" > $TAP_FILE
+
+# Process each line of the output
+while IFS= read -r line; do
+    if [[ $line =~ ^===\ RUN\ +(.+)$ ]]; then
+        # New test started
+        test_name="${BASH_REMATCH[1]}"
+        test_count=$((test_count + 1))
+    elif [[ $line =~ ^---\ (PASS|FAIL):\ +(.+)\ \([0-9.]+s\)$ ]]; then
+        # Test result found
+        result="${BASH_REMATCH[1]}"
+        test_name="${BASH_REMATCH[2]}"
+
+        if [ "$result" == "PASS" ]; then
+            echo "ok $test_count - $test_name" >> $TAP_FILE
+            passed_count=$((passed_count + 1))
+        else
+            echo "not ok $test_count - $test_name" >> $TAP_FILE
+        fi
+    fi
+done <<< "$output"
+
+# Print test plan
+echo "1..$test_count" >> $TAP_FILE
+
+# Print summary
+echo "# tests $test_count" >> $TAP_FILE
+echo "# pass $passed_count" >> $TAP_FILE
+echo "# fail $((test_count - passed_count))" >> $TAP_FILE

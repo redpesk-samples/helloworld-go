@@ -25,3 +25,11 @@ deps:
 .PHONY: clean
 clean:
 	rm -rf bin
+
+.PHONY: test
+test:
+	go test -v ./cmd/...
+
+.PHONY: test.binary
+test.binary:
+	go test -v ./cmd/... -o bin/helloworld-go.test

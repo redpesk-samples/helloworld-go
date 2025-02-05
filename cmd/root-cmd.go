@@ -15,25 +15,31 @@ limitations under the License.
 package cmd
 
 import (
-	"fmt"
+	"errors"
 	"os"
 
 	"github.com/spf13/cobra"
 )
 
-var rootCmd = &cobra.Command{
-	Use:   "hello",
-	Short: "This is the hello command",
-	Long: `A longer description
-	for the hello command`,
+func NewRootCmd() *cobra.Command {
 
-	Run: func(cmd *cobra.Command, args []string) {
-		fmt.Println("Hello World !")
-	},
+	return &cobra.Command{
+		Use:   "hello",
+		Short: "This is the hello command",
+		Long: `A longer description
+	for the hello command`,
+		RunE: func(cmd *cobra.Command, args []string) error {
+			cmd.Println("Hello World !")
+			if len(args) > 1 {
+				return errors.New("no argument supported")
+			}
+			return nil
+		},
+	}
 }
 
 func Execute() {
-	err := rootCmd.Execute()
+	err := NewRootCmd().Execute()
 	if err != nil {
 		os.Exit(1)
 	}

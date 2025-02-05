@@ -106,11 +106,11 @@ Copy the `curl -fsSL ...` command into your board/qemu console or ssh session.
 And then you can install your helloworld-go application using :
 
 ```bash
-# install
 dnf install -y helloworld-go
 ```
 
-> NOTE: you can also directly install your RPM without declaring the repository using the command line below but note that it will
+> NOTE: you can also directly install your RPM without declaring the repository using the command line below\
+>   but note that it will not ease package updates if you plan to rebuild and update it several times.
 >
 ```bash
 dnf install -y https://community-app.redpesk.bzh/kbuild/work/tasks/8291/8291/helloworld-go-1.0.0-1.golang.sample_0a99d181.rpbatz_1.x86_64.rpm
