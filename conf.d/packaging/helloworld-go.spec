@@ -18,7 +18,7 @@ Source:         %{name}-%{version}.tar.gz
 Source1:        vendor.tar.bz2
 
 BuildRequires:  go-rpm-macros
-BuildRequires:  go >= 1.21
+BuildRequires:  go >= 1.19
 
 %description
 The simple helloworld program written in Go!
