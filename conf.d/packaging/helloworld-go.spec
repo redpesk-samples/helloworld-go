@@ -42,7 +42,7 @@ The tests for the simplest hello program of the world!
     echo "Unsupported architecture %{_arch}"
     exit 1
 %endif
-GOOS=linux GOARCH=%{go_arch} go build -buildmode=pie -ldflags="-linkmode=external" -o helloworld-go .
+CGO_ENABLED=1 GOOS=linux GOARCH=%{go_arch} go build -buildmode=pie -ldflags="-linkmode=external" -o helloworld-go .
 GOOS=linux GOARCH=%{go_arch} go test -buildmode=pie -ldflags="-linkmode=external" -o helloworld-go.test ./cmd/...
 
 ### Check stage
