@@ -43,7 +43,7 @@ The tests for the simplest hello program of the world!
     exit 1
 %endif
 CGO_ENABLED=1 GOOS=linux GOARCH=%{go_arch} go build -buildmode=pie -ldflags="-linkmode=external" -o helloworld-go .
-GOOS=linux GOARCH=%{go_arch} go test -buildmode=pie -ldflags="-linkmode=external" -o helloworld-go.test ./cmd/...
+CGO_ENABLED=1 GOOS=linux GOARCH=%{go_arch} go test -buildmode=pie -ldflags="-linkmode=external" -o helloworld-go.test ./cmd/...
 
 ### Check stage
 %check
